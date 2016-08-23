@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkobe.db.dao.OrderlistMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkobe.db.model.Orderlist" >
+    <id column="oid" property="oid" jdbcType="INTEGER" />
+    <result column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="expense" property="expense" jdbcType="INTEGER" />
+    <result column="xiadantime" property="xiadantime" jdbcType="DATE" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="destination" property="destination" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    oid, sid, cid, gid, rid, expense, xiadantime, status, destination
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderlist
+    where oid = #{oid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orderlist
+    where oid = #{oid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qjkobe.db.model.Orderlist" >
+    insert into orderlist (oid, sid, cid, 
+      gid, rid, expense, 
+      xiadantime, status, destination
+      )
+    values (#{oid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, 
+      #{gid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, #{expense,jdbcType=INTEGER}, 
+      #{xiadantime,jdbcType=DATE}, #{status,jdbcType=INTEGER}, #{destination,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkobe.db.model.Orderlist" >
+    insert into orderlist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="expense != null" >
+        expense,
+      </if>
+      <if test="xiadantime != null" >
+        xiadantime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="destination != null" >
+        destination,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="expense != null" >
+        #{expense,jdbcType=INTEGER},
+      </if>
+      <if test="xiadantime != null" >
+        #{xiadantime,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="destination != null" >
+        #{destination,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkobe.db.model.Orderlist" >
+    update orderlist
+    <set >
+      <if test="sid != null" >
+        sid = #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        rid = #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="expense != null" >
+        expense = #{expense,jdbcType=INTEGER},
+      </if>
+      <if test="xiadantime != null" >
+        xiadantime = #{xiadantime,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="destination != null" >
+        destination = #{destination,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkobe.db.model.Orderlist" >
+    update orderlist
+    set sid = #{sid,jdbcType=INTEGER},
+      cid = #{cid,jdbcType=INTEGER},
+      gid = #{gid,jdbcType=INTEGER},
+      rid = #{rid,jdbcType=INTEGER},
+      expense = #{expense,jdbcType=INTEGER},
+      xiadantime = #{xiadantime,jdbcType=DATE},
+      status = #{status,jdbcType=INTEGER},
+      destination = #{destination,jdbcType=VARCHAR}
+    where oid = #{oid,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectListByParam" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from orderlist
+    where 1 = 1
+    <if test="pojo != null and pojo.sid != null and pojo.sid != ''">
+      and sid = #{pojo.sid,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.cid != null and pojo.cid != ''">
+      and cid = #{pojo.cid,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.gid != null and pojo.gid != ''">
+      and gid = #{pojo.gid,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.rid != null and pojo.rid != ''">
+      and rid = #{pojo.rid,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.expense != null and pojo.expense != ''">
+      and expense = #{pojo.expense,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.xiadantime != null and pojo.xiadantime != ''">
+      and xiadantime = #{pojo.xiadantime,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.destination != null and pojo.destination != ''">
+      and destination = #{pojo.destination,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.status != null and pojo.status != ''">
+      and status = #{pojo.status,jdbcType=VARCHAR}
+    </if>
+    <if test="orderObj != null">
+      order by
+      <foreach collection="orderObj.orders" item="obj" separator=",">
+        ${obj.orderName}  ${obj.orderSort}
+      </foreach>
+    </if>
+    <if test="pager != null">
+      limit ${pager.start}, ${pager.pageSize}
+    </if>
+  </select>
+
+  <select id="selectCountByParam" resultType="int">
+    select count(1)
+    from orderlist
+    where 1 = 1
+    <if test="pojo != null and pojo.sid != null and pojo.sid != ''">
+      and sid = #{pojo.sid,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.cid != null and pojo.cid != ''">
+      and cid = #{pojo.cid,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.gid != null and pojo.gid != ''">
+      and gid = #{pojo.gid,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.rid != null and pojo.rid != ''">
+      and rid = #{pojo.rid,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.expense != null and pojo.expense != ''">
+      and expense = #{pojo.expense,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.xiadantime != null and pojo.xiadantime != ''">
+      and xiadantime = #{pojo.xiadantime,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.destination != null and pojo.destination != ''">
+      and destination = #{pojo.destination,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.status != null and pojo.status != ''">
+      and status = #{pojo.status,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

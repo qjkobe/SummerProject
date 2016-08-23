@@ -12,9 +12,9 @@ import java.util.List;
 public interface StaffService {
     public List<Staff> getStaffListByParam(Staff staff, Order order, Pager page);
 
-    public void addAdmin(Staff staff);
+    public void addStaff(Staff staff);
 
     public void modifyStaff(Staff staff);
 
-    public Staff getStaffById(int id);
+    public Staff getStaffById(String id);
 }

@@ -16,5 +16,5 @@ public interface ClientService {
 
     public void modifyClient(Client client);
 
-    public Client getClientById(int id);
+    public Client getClientById(String id);
 }

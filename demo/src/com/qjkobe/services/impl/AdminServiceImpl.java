@@ -46,7 +46,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional(readOnly = true)
-    public Admin getAdminById(int id) {
+    public Admin getAdminById(String id) {
         return adminMapper.selectByPrimaryKey(id);
     }
 }

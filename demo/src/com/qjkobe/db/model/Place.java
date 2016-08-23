@@ -1,7 +1,7 @@
 package com.qjkobe.db.model;
 
 public class Place extends Pojo {
-    private Integer pid;
+    private String pid;
 
     private String namex;
 
@@ -9,11 +9,11 @@ public class Place extends Pojo {
 
     private Integer distance;
 
-    public Integer getPid() {
+    public String getPid() {
         return pid;
     }
 
-    public void setPid(Integer pid) {
+    public void setPid(String pid) {
         this.pid = pid;
     }
 

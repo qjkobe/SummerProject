@@ -16,5 +16,5 @@ public interface RouteService {
 
     public void modifyRoute(Route route);
 
-    public Route getRouteById(int id);
+    public Route getRouteById(String id);
 }

@@ -1,7 +1,7 @@
 package com.qjkobe.db.model;
 
 public class Staff extends Pojo {
-    private Integer sid;
+    private String sid;
 
     private String username;
 
@@ -13,15 +13,15 @@ public class Staff extends Pojo {
 
     private String phone;
 
-    private String avatar;
-
     private String contro;
 
-    public Integer getSid() {
+    private String avatar;
+
+    public String getSid() {
         return sid;
     }
 
-    public void setSid(Integer sid) {
+    public void setSid(String sid) {
         this.sid = sid;
     }
 
@@ -65,19 +65,19 @@ public class Staff extends Pojo {
         this.phone = phone;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
     public String getContro() {
         return contro;
     }
 
     public void setContro(String contro) {
         this.contro = contro;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

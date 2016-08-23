@@ -16,5 +16,5 @@ public interface AdminService {
 
     public void modifyAdmin(Admin admin);
 
-    public Admin getAdminById(int id);
+    public Admin getAdminById(String id);
 }

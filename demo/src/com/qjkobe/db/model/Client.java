@@ -1,7 +1,7 @@
 package com.qjkobe.db.model;
 
 public class Client extends Pojo {
-    private Integer cid;
+    private String cid;
 
     private String username;
 
@@ -17,11 +17,11 @@ public class Client extends Pojo {
 
     private String avatar;
 
-    public Integer getCid() {
+    public String getCid() {
         return cid;
     }
 
-    public void setCid(Integer cid) {
+    public void setCid(String cid) {
         this.cid = cid;
     }
 

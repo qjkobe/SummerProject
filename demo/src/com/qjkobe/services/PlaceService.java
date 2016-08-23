@@ -16,5 +16,5 @@ public interface PlaceService {
 
     public void modifyPlace(Place place);
 
-    public Place getPlaceById(int id);
+    public Place getPlaceById(String id);
 }

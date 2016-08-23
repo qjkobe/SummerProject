@@ -46,7 +46,7 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     @Transactional(readOnly = true)
-    public Route getRouteById(int id) {
+    public Route getRouteById(String id) {
         return routeMapper.selectByPrimaryKey(id);
     }
 }

@@ -46,7 +46,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     @Transactional(readOnly = true)
-    public Client getClientById(int id) {
+    public Client getClientById(String id) {
         return clientMapper.selectByPrimaryKey(id);
     }
 }

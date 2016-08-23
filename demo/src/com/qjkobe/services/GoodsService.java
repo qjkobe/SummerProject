@@ -16,5 +16,5 @@ public interface GoodsService {
 
     public void modifyGoods(Goods goods);
 
-    public Goods getGoodsById(int id);
+    public Goods getGoodsById(String id);
 }

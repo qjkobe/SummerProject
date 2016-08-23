@@ -46,7 +46,7 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     @Transactional(readOnly = true)
-    public Place getPlaceById(int id) {
+    public Place getPlaceById(String id) {
         return placeMapper.selectByPrimaryKey(id);
     }
 }

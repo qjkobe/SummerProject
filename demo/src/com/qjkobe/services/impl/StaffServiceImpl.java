@@ -34,7 +34,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addAdmin(Staff staff) {
+    public void addStaff(Staff staff) {
         staffMapper.insertSelective(staff);
     }
 
@@ -46,7 +46,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     @Transactional(readOnly = true)
-    public Staff getStaffById(int id) {
+    public Staff getStaffById(String id) {
         return staffMapper.selectByPrimaryKey(id);
     }
 }

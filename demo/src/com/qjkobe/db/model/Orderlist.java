@@ -3,15 +3,15 @@ package com.qjkobe.db.model;
 import java.util.Date;
 
 public class Orderlist extends Pojo {
-    private Integer oid;
+    private String oid;
 
-    private Integer sid;
+    private String sid;
 
-    private Integer cid;
+    private String cid;
 
-    private Integer gid;
+    private String gid;
 
-    private Integer rid;
+    private String rid;
 
     private Integer expense;
 
@@ -21,43 +21,43 @@ public class Orderlist extends Pojo {
 
     private String destination;
 
-    public Integer getOid() {
+    public String getOid() {
         return oid;
     }
 
-    public void setOid(Integer oid) {
+    public void setOid(String oid) {
         this.oid = oid;
     }
 
-    public Integer getSid() {
+    public String getSid() {
         return sid;
     }
 
-    public void setSid(Integer sid) {
+    public void setSid(String sid) {
         this.sid = sid;
     }
 
-    public Integer getCid() {
+    public String getCid() {
         return cid;
     }
 
-    public void setCid(Integer cid) {
+    public void setCid(String cid) {
         this.cid = cid;
     }
 
-    public Integer getGid() {
+    public String getGid() {
         return gid;
     }
 
-    public void setGid(Integer gid) {
+    public void setGid(String gid) {
         this.gid = gid;
     }
 
-    public Integer getRid() {
+    public String getRid() {
         return rid;
     }
 
-    public void setRid(Integer rid) {
+    public void setRid(String rid) {
         this.rid = rid;
     }
 

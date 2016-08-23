@@ -16,5 +16,5 @@ public interface OrderService {
 
     public void modifyOrder(Orderlist orderlist);
 
-    public Orderlist getOrderById(int id);
+    public Orderlist getOrderById(String id);
 }

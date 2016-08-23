@@ -1,9 +1,9 @@
 package com.qjkobe.db.model;
 
 public class Goods extends Pojo {
-    private Integer gid;
+    private String gid;
 
-    private Integer cid;
+    private String cid;
 
     private Integer weight;
 
@@ -11,19 +11,19 @@ public class Goods extends Pojo {
 
     private Integer status;
 
-    public Integer getGid() {
+    public String getGid() {
         return gid;
     }
 
-    public void setGid(Integer gid) {
+    public void setGid(String gid) {
         this.gid = gid;
     }
 
-    public Integer getCid() {
+    public String getCid() {
         return cid;
     }
 
-    public void setCid(Integer cid) {
+    public void setCid(String cid) {
         this.cid = cid;
     }
 

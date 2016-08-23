@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public Orderlist getOrderById(int id) {
+    public Orderlist getOrderById(String id) {
         return orderlistMapper.selectByPrimaryKey(id);
     }
 }

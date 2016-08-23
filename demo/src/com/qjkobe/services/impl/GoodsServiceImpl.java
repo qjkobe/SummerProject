@@ -46,7 +46,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Transactional(readOnly = true)
-    public Goods getGoodsById(int id) {
+    public Goods getGoodsById(String id) {
         return goodsMapper.selectByPrimaryKey(id);
     }
 }

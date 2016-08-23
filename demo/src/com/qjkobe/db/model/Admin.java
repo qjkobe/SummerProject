@@ -1,17 +1,17 @@
 package com.qjkobe.db.model;
 
 public class Admin extends Pojo {
-    private Integer aid;
+    private String aid;
 
     private String username;
 
     private String password;
 
-    public Integer getAid() {
+    public String getAid() {
         return aid;
     }
 
-    public void setAid(Integer aid) {
+    public void setAid(String aid) {
         this.aid = aid;
     }
 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkobe.db.dao.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkobe.db.model.Admin" >
+    <id column="aid" property="aid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    aid, username, password
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where aid = #{aid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from admin
+    where aid = #{aid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qjkobe.db.model.Admin" >
+    insert into admin (aid, username, password
+      )
+    values (#{aid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkobe.db.model.Admin" >
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aid != null" >
+        aid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aid != null" >
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkobe.db.model.Admin" >
+    update admin
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkobe.db.model.Admin" >
+    update admin
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR}
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectListByParam" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from admin
+    where 1 = 1
+    <if test="pojo != null and pojo.username != null and pojo.username != ''">
+      and username = #{pojo.username,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.password != null and pojo.password != ''">
+      and password = #{pojo.password,jdbcType=VARCHAR}
+    </if>
+    <if test="orderObj != null">
+      order by
+      <foreach collection="orderObj.orders" item="obj" separator=",">
+        ${obj.orderName}  ${obj.orderSort}
+      </foreach>
+    </if>
+    <if test="pager != null">
+      limit ${pager.start}, ${pager.pageSize}
+    </if>
+  </select>
+
+  <select id="selectCountByParam" resultType="int">
+    select count(1)
+    from admin
+    where 1 = 1
+    <if test="pojo != null and pojo.username != null and pojo.username != ''">
+      and username = #{pojo.username,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.password != null and pojo.password != ''">
+      and password = #{pojo.password,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

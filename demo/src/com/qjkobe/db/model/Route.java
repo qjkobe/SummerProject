@@ -1,17 +1,17 @@
 package com.qjkobe.db.model;
 
 public class Route extends Pojo {
-    private Integer rid;
+    private String rid;
 
     private String place;
 
     private String daodatime;
 
-    public Integer getRid() {
+    public String getRid() {
         return rid;
     }
 
-    public void setRid(Integer rid) {
+    public void setRid(String rid) {
         this.rid = rid;
     }
 
