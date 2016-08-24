@@ -2,42 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qjkobe.db.dao.StaffMapper" >
   <resultMap id="BaseResultMap" type="com.qjkobe.db.model.Staff" >
-    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <id column="sid" property="sid" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="mail" property="mail" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="contro" property="contro" jdbcType="VARCHAR" />
     <result column="avatar" property="avatar" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.qjkobe.db.model.Staff" extends="BaseResultMap" >
-    <result column="contro" property="contro" jdbcType="LONGVARCHAR" />
-  </resultMap>
   <sql id="Base_Column_List" >
-    sid, username, password, name, mail, phone, avatar
+    sid, username, password, name, mail, phone, contro, avatar
   </sql>
-  <sql id="Blob_Column_List" >
-    contro
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from staff
-    where sid = #{sid,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from staff
-    where sid = #{sid,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.qjkobe.db.model.Staff" >
-    insert into staff (sid, username, password, 
-      name, mail, phone, 
-      avatar, contro)
-    values (#{sid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{avatar,jdbcType=VARCHAR}, #{contro,jdbcType=LONGVARCHAR})
+    insert into staff (sid, username, password,
+    name, mail, phone,
+    contro, avatar)
+    values (#{sid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+    #{name,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+    #{contro,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.qjkobe.db.model.Staff" >
     insert into staff
@@ -60,16 +53,16 @@
       <if test="phone != null" >
         phone,
       </if>
-      <if test="avatar != null" >
-        avatar,
-      </if>
       <if test="contro != null" >
         contro,
+      </if>
+      <if test="avatar != null" >
+        avatar,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="sid != null" >
-        #{sid,jdbcType=INTEGER},
+        #{sid,jdbcType=VARCHAR},
       </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
@@ -86,11 +79,11 @@
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="contro != null" >
+        #{contro,jdbcType=VARCHAR},
+      </if>
       <if test="avatar != null" >
         #{avatar,jdbcType=VARCHAR},
-      </if>
-      <if test="contro != null" >
-        #{contro,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -112,37 +105,26 @@
       <if test="phone != null" >
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="contro != null" >
+        contro = #{contro,jdbcType=VARCHAR},
+      </if>
       <if test="avatar != null" >
         avatar = #{avatar,jdbcType=VARCHAR},
       </if>
-      <if test="contro != null" >
-        contro = #{contro,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where sid = #{sid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.qjkobe.db.model.Staff" >
-    update staff
-    set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      mail = #{mail,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      avatar = #{avatar,jdbcType=VARCHAR},
-      contro = #{contro,jdbcType=LONGVARCHAR}
-    where sid = #{sid,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.qjkobe.db.model.Staff" >
     update staff
     set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      mail = #{mail,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      avatar = #{avatar,jdbcType=VARCHAR}
-    where sid = #{sid,jdbcType=INTEGER}
+    password = #{password,jdbcType=VARCHAR},
+    name = #{name,jdbcType=VARCHAR},
+    mail = #{mail,jdbcType=VARCHAR},
+    phone = #{phone,jdbcType=VARCHAR},
+    contro = #{contro,jdbcType=VARCHAR},
+    avatar = #{avatar,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=VARCHAR}
   </update>
-
 
   <select id="selectListByParam" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />

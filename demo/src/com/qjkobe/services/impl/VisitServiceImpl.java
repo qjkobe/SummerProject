@@ -6,6 +6,7 @@ import com.qjkobe.db.model.param.Order;
 import com.qjkobe.db.model.param.Pager;
 import com.qjkobe.services.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/8/23.
  */
+@Service("visitService")
+@Transactional
 public class VisitServiceImpl implements VisitService {
 
     @Autowired

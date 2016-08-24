@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkobe.db.dao.TVisitNumMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkobe.db.model.TVisitNum" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="dayvisit" property="dayvisit" jdbcType="INTEGER" />
+    <result column="allvisit" property="allvisit" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, userid, dayvisit, allvisit
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_visit_num
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_visit_num
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qjkobe.db.model.TVisitNum" >
+    insert into t_visit_num (ID, userid, dayvisit, 
+      allvisit)
+    values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{dayvisit,jdbcType=INTEGER}, 
+      #{allvisit,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkobe.db.model.TVisitNum" >
+    insert into t_visit_num
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="dayvisit != null" >
+        dayvisit,
+      </if>
+      <if test="allvisit != null" >
+        allvisit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="dayvisit != null" >
+        #{dayvisit,jdbcType=INTEGER},
+      </if>
+      <if test="allvisit != null" >
+        #{allvisit,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkobe.db.model.TVisitNum" >
+    update t_visit_num
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="dayvisit != null" >
+        dayvisit = #{dayvisit,jdbcType=INTEGER},
+      </if>
+      <if test="allvisit != null" >
+        allvisit = #{allvisit,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkobe.db.model.TVisitNum" >
+    update t_visit_num
+    set userid = #{userid,jdbcType=VARCHAR},
+      dayvisit = #{dayvisit,jdbcType=INTEGER},
+      allvisit = #{allvisit,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectListByParam" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_visit_num
+    where 1 = 1
+    <if test="pojo != null and pojo.userid != null and pojo.userid != ''">
+      and userid = #{pojo.userid,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.dayvisit != null and pojo.dayvisit != ''">
+      and dayvisit = #{pojo.dayvisit,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.allvisit != null and pojo.allvisit != ''">
+      and allvisit = #{pojo.allvisit,jdbcType=VARCHAR}
+    </if>
+    <if test="orderObj != null">
+      order by
+      <foreach collection="orderObj.orders" item="obj" separator=",">
+        ${obj.orderName}  ${obj.orderSort}
+      </foreach>
+    </if>
+    <if test="pager != null">
+      limit ${pager.start}, ${pager.pageSize}
+    </if>
+  </select>
+
+  <select id="selectCountByParam" resultType="int">
+    select count(1)
+    from t_visit_num
+    where 1 = 1
+    <if test="pojo != null and pojo.userid != null and pojo.userid != ''">
+      and userid = #{pojo.userid,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.dayvisit != null and pojo.dayvisit != ''">
+      and dayvisit = #{pojo.dayvisit,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.allvisit != null and pojo.allvisit != ''">
+      and allvisit = #{pojo.allvisit,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>
