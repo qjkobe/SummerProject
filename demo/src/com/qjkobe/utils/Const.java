@@ -20,4 +20,14 @@ public class Const {
      * 用户名重复
      */
     public static final String EXIST_STATE = "exist";
+
+    /**
+     * 编辑
+     */
+    public static final String EDIT_UPDATE = "update";
+
+    /**
+     * 添加
+     */
+    public static final String EDIT_ADD = "add";
 }
