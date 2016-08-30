@@ -80,8 +80,13 @@ public class PlaceAction {
 
     @RequestMapping(value = "editPosition", produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String editPosition(TPlace place, String actionFlag, HttpServletResponse response) {
+    public String editPosition(TPlace place, String actionFlag, HttpServletResponse response, String isdelete) {
         response.addHeader("Access-Control-Allow-Origin", "*");
+        if(isdelete != null && "0".equals(isdelete)){
+            place.setIsdelete(0);
+        }else{
+            place.setIsdelete(1);
+        }
         JSONObject jsonObject = new JSONObject();
         if (StringUtils.isEmpty(place.getName())) {
             jsonObject.put("state", Const.ERROR_STATE);
@@ -94,6 +99,8 @@ public class PlaceAction {
             place.setId(UUID.getID());
             positionService.addPost(place);
             jsonObject.put("state", Const.SUCCESS_STATE);
+        } else {
+            jsonObject.put("state", Const.ERROR_STATE);
         }
         return jsonObject.toString();
     }
