@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -31,7 +32,8 @@ public class PlaceAction {
 
     @RequestMapping(value = "showPlace", produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String showPlace(PagerImpl pager){
+    public String showPlace(PagerImpl pager, HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
 //        Order order = new Order();
 //        order.addOrder("updateTime", OrderSort.DESC);
         JSONObject jsonObject = new JSONObject();
@@ -44,16 +46,17 @@ public class PlaceAction {
 
     @RequestMapping(value = "editPlace", produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String editPlace(Place place, String actionFlag){
+    public String editPlace(Place place, String actionFlag, HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
         JSONObject jsonObject = new JSONObject();
-        if(StringUtils.isEmpty(place.getDistance()) || StringUtils.isEmpty(place.getNamex()) || StringUtils.isEmpty(place.getNamey())){
+        if (StringUtils.isEmpty(place.getDistance()) || StringUtils.isEmpty(place.getNamex()) || StringUtils.isEmpty(place.getNamey())) {
             jsonObject.put("state", Const.ERROR_STATE);
             return jsonObject.toString();
         }
-        if(Const.EDIT_UPDATE.equals(actionFlag)){
+        if (Const.EDIT_UPDATE.equals(actionFlag)) {
             placeService.modifyPlace(place);
             jsonObject.put("state", Const.SUCCESS_STATE);
-        }else if(Const.EDIT_ADD.equals(actionFlag)){
+        } else if (Const.EDIT_ADD.equals(actionFlag)) {
             place.setPid(UUID.getID());
             placeService.addPlace(place);
             jsonObject.put("state", Const.SUCCESS_STATE);
@@ -63,7 +66,8 @@ public class PlaceAction {
 
     @RequestMapping(value = "showPosition", produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String showPosition(PagerImpl pager){
+    public String showPosition(PagerImpl pager, HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
 //        Order order = new Order();
 //        order.addOrder("updateTime", OrderSort.DESC);
         JSONObject jsonObject = new JSONObject();
@@ -76,16 +80,17 @@ public class PlaceAction {
 
     @RequestMapping(value = "editPosition", produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String editPosition(TPlace place, String actionFlag){
+    public String editPosition(TPlace place, String actionFlag, HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
         JSONObject jsonObject = new JSONObject();
-        if(StringUtils.isEmpty(place.getName())){
+        if (StringUtils.isEmpty(place.getName())) {
             jsonObject.put("state", Const.ERROR_STATE);
             return jsonObject.toString();
         }
-        if(Const.EDIT_UPDATE.equals(actionFlag)){
+        if (Const.EDIT_UPDATE.equals(actionFlag)) {
             positionService.modifyPost(place);
             jsonObject.put("state", Const.SUCCESS_STATE);
-        }else if(Const.EDIT_ADD.equals(actionFlag)){
+        } else if (Const.EDIT_ADD.equals(actionFlag)) {
             place.setId(UUID.getID());
             positionService.addPost(place);
             jsonObject.put("state", Const.SUCCESS_STATE);
