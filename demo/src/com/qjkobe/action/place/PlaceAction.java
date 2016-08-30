@@ -2,10 +2,10 @@ package com.qjkobe.action.place;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qjkobe.db.model.Place;
-import com.qjkobe.db.model.param.Order;
-import com.qjkobe.db.model.param.OrderSort;
+import com.qjkobe.db.model.TPlace;
 import com.qjkobe.db.model.param.PagerImpl;
 import com.qjkobe.services.PlaceService;
+import com.qjkobe.services.PositionService;
 import com.qjkobe.utils.Const;
 import com.qjkobe.utils.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,9 @@ public class PlaceAction {
 
     @Autowired
     PlaceService placeService;
+
+    @Autowired
+    PositionService positionService;
 
     @RequestMapping(value = "showPlace", produces = "text/html;charset=UTF-8")
     @ResponseBody
@@ -53,6 +56,38 @@ public class PlaceAction {
         }else if(Const.EDIT_ADD.equals(actionFlag)){
             place.setPid(UUID.getID());
             placeService.addPlace(place);
+            jsonObject.put("state", Const.SUCCESS_STATE);
+        }
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "showPosition", produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String showPosition(PagerImpl pager){
+//        Order order = new Order();
+//        order.addOrder("updateTime", OrderSort.DESC);
+        JSONObject jsonObject = new JSONObject();
+        TPlace place = new TPlace();
+        List<TPlace> list1 = positionService.getPostListByParam(place, null, pager);
+        jsonObject.put("page", pager);
+        jsonObject.put("place", list1);
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "editPosition", produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String editPosition(TPlace place, String actionFlag){
+        JSONObject jsonObject = new JSONObject();
+        if(StringUtils.isEmpty(place.getName())){
+            jsonObject.put("state", Const.ERROR_STATE);
+            return jsonObject.toString();
+        }
+        if(Const.EDIT_UPDATE.equals(actionFlag)){
+            positionService.modifyPost(place);
+            jsonObject.put("state", Const.SUCCESS_STATE);
+        }else if(Const.EDIT_ADD.equals(actionFlag)){
+            place.setId(UUID.getID());
+            positionService.addPost(place);
             jsonObject.put("state", Const.SUCCESS_STATE);
         }
         return jsonObject.toString();

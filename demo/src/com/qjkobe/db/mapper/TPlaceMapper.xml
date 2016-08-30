@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkobe.db.dao.TPlaceMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkobe.db.model.TPlace" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="frequence" property="frequence" jdbcType="INTEGER" />
+    <result column="posX" property="posx" jdbcType="VARCHAR" />
+    <result column="posY" property="posy" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, frequence, posX, posY, isdelete
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_place
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_place
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qjkobe.db.model.TPlace" >
+    insert into t_place (id, name, frequence, 
+      posX, posY, isdelete
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{frequence,jdbcType=INTEGER}, 
+      #{posx,jdbcType=VARCHAR}, #{posy,jdbcType=VARCHAR}, #{isdelete,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkobe.db.model.TPlace" >
+    insert into t_place
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="frequence != null" >
+        frequence,
+      </if>
+      <if test="posx != null" >
+        posX,
+      </if>
+      <if test="posy != null" >
+        posY,
+      </if>
+      <if test="isdelete != null" >
+        isdelete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="frequence != null" >
+        #{frequence,jdbcType=INTEGER},
+      </if>
+      <if test="posx != null" >
+        #{posx,jdbcType=VARCHAR},
+      </if>
+      <if test="posy != null" >
+        #{posy,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkobe.db.model.TPlace" >
+    update t_place
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="frequence != null" >
+        frequence = #{frequence,jdbcType=INTEGER},
+      </if>
+      <if test="posx != null" >
+        posX = #{posx,jdbcType=VARCHAR},
+      </if>
+      <if test="posy != null" >
+        posY = #{posy,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkobe.db.model.TPlace" >
+    update t_place
+    set name = #{name,jdbcType=VARCHAR},
+      frequence = #{frequence,jdbcType=INTEGER},
+      posX = #{posx,jdbcType=VARCHAR},
+      posY = #{posy,jdbcType=VARCHAR},
+      isdelete = #{isdelete,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectListByParam" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_place
+    where 1 = 1
+    <if test="pojo != null and pojo.name != null and pojo.name != ''">
+      and username = #{pojo.username,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.frequence != null and pojo.frequence != ''">
+      and frequence = #{pojo.frequence,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.isdelete != null and pojo.isdelete != ''">
+      and isdelete = #{pojo.isdelete,jdbcType=VARCHAR}
+    </if>
+    <if test="orderObj != null">
+      order by
+      <foreach collection="orderObj.orders" item="obj" separator=",">
+        ${obj.orderName}  ${obj.orderSort}
+      </foreach>
+    </if>
+    <if test="pager != null">
+      limit ${pager.start}, ${pager.pageSize}
+    </if>
+  </select>
+
+  <select id="selectCountByParam" resultType="int">
+    select count(1)
+    from t_place
+    where 1 = 1
+    <if test="pojo != null and pojo.name != null and pojo.name != ''">
+      and username = #{pojo.username,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.frequence != null and pojo.frequence != ''">
+      and frequence = #{pojo.frequence,jdbcType=VARCHAR}
+    </if>
+    <if test="pojo != null and pojo.isdelete != null and pojo.isdelete != ''">
+      and isdelete = #{pojo.isdelete,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>
