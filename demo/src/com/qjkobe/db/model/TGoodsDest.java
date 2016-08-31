@@ -9,6 +9,8 @@ public class TGoodsDest extends Pojo {
 
     private String dest;
 
+    private String nickname;
+
     public String getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class TGoodsDest extends Pojo {
 
     public void setDest(String dest) {
         this.dest = dest;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

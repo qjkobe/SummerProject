@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.qjkobe.db.model.Client;
 import com.qjkobe.db.model.Goods;
+import com.qjkobe.db.model.TGoodsDest;
 import com.qjkobe.services.ClientService;
+import com.qjkobe.services.DestService;
 import com.qjkobe.services.GoodsService;
 import com.qjkobe.utils.Const;
 import com.qjkobe.utils.UUID;
@@ -29,6 +31,9 @@ public class ClientAction {
 
     @Autowired
     GoodsService goodsService;
+
+    @Autowired
+    DestService destService;
 
     @RequestMapping(value = "editGoods")
     @ResponseBody
@@ -56,6 +61,33 @@ public class ClientAction {
             jsonObject.put("state", Const.SUCCESS_STATE);
         }else if(Const.EDIT_UPDATE.equals(actionFlag)){
             goodsService.modifyGoods(goods);
+            jsonObject.put("state", Const.SUCCESS_STATE);
+        }
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "editdest")
+    @ResponseBody
+    public String editDest(TGoodsDest tGoodsDest, String actionFlag, String clientName, String isdelete, HttpServletResponse response){
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        JSONObject jsonObject = new JSONObject();
+        if(StringUtils.isEmpty(tGoodsDest.getDest()) || StringUtils.isEmpty(tGoodsDest.getNickname())){
+            jsonObject.put("state", Const.ERROR_STATE);
+            return jsonObject.toString();
+        }
+
+        Client client = new Client();
+        client.setUsername(clientName);
+        List<Client> list1 = clientService.getClientListByParam(client, null, null);
+        if(Const.EDIT_ADD.equals(actionFlag)){
+            tGoodsDest.setId(UUID.getID());
+            tGoodsDest.setCid(list1.get(0).getCid());
+
+
+            jsonObject.put("state", Const.SUCCESS_STATE);
+        }else if(Const.EDIT_UPDATE.equals(actionFlag)){
+
+
             jsonObject.put("state", Const.SUCCESS_STATE);
         }
         return jsonObject.toString();
