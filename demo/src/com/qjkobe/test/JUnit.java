@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/8/30.
  */
@@ -19,5 +21,8 @@ public class JUnit {
         PositionService positionService = (PositionService) ctx.getBean("positionService");
 
         TPlace place = new TPlace();
+        place.setIsdelete(0);
+        List<TPlace> list1 = positionService.getPostListByParam(place, null, null);
+        System.out.println(list1.size());
     }
 }

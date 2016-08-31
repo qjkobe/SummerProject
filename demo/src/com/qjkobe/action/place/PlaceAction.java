@@ -38,7 +38,7 @@ public class PlaceAction {
 //        order.addOrder("updateTime", OrderSort.DESC);
         JSONObject jsonObject = new JSONObject();
         Place place = new Place();
-        List<Place> list1 = placeService.getPlaceListByParam(place, null, pager);
+        List<Place> list1 = placeService.getPlaceListByParam(place, null, null);
         jsonObject.put("page", pager);
         jsonObject.put("place", list1);
         return jsonObject.toString();
@@ -72,7 +72,22 @@ public class PlaceAction {
 //        order.addOrder("updateTime", OrderSort.DESC);
         JSONObject jsonObject = new JSONObject();
         TPlace place = new TPlace();
-        List<TPlace> list1 = positionService.getPostListByParam(place, null, pager);
+        List<TPlace> list1 = positionService.getPostListByParam(place, null, null);
+        jsonObject.put("page", pager);
+        jsonObject.put("place", list1);
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "avaiPosition", produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String avaiPosition(PagerImpl pager, HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+//        Order order = new Order();
+//        order.addOrder("updateTime", OrderSort.DESC);
+        JSONObject jsonObject = new JSONObject();
+        TPlace place = new TPlace();
+        place.setIsdelete(0);
+        List<TPlace> list1 = positionService.getPostListByParam(place, null, null);
         jsonObject.put("page", pager);
         jsonObject.put("place", list1);
         return jsonObject.toString();

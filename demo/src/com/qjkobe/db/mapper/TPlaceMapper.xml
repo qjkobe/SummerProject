@@ -109,13 +109,13 @@
     from t_place
     where 1 = 1
     <if test="pojo != null and pojo.name != null and pojo.name != ''">
-      and username = #{pojo.username,jdbcType=VARCHAR}
+      and name = #{pojo.name,jdbcType=VARCHAR}
     </if>
     <if test="pojo != null and pojo.frequence != null and pojo.frequence != ''">
       and frequence = #{pojo.frequence,jdbcType=VARCHAR}
     </if>
-    <if test="pojo != null and pojo.isdelete != null and pojo.isdelete != ''">
-      and isdelete = #{pojo.isdelete,jdbcType=VARCHAR}
+    <if test="pojo != null and pojo.isdelete != null">
+      and isdelete = #{pojo.isdelete,jdbcType=INTEGER}
     </if>
     <if test="orderObj != null">
       order by
@@ -133,13 +133,13 @@
     from t_place
     where 1 = 1
     <if test="pojo != null and pojo.name != null and pojo.name != ''">
-      and username = #{pojo.username,jdbcType=VARCHAR}
+      and name = #{pojo.name,jdbcType=VARCHAR}
     </if>
     <if test="pojo != null and pojo.frequence != null and pojo.frequence != ''">
       and frequence = #{pojo.frequence,jdbcType=VARCHAR}
     </if>
-    <if test="pojo != null and pojo.isdelete != null and pojo.isdelete != ''">
-      and isdelete = #{pojo.isdelete,jdbcType=VARCHAR}
+    <if test="pojo != null and pojo.isdelete != null">
+      and isdelete = #{pojo.isdelete,jdbcType=INTEGER}
     </if>
   </select>
 </mapper>
