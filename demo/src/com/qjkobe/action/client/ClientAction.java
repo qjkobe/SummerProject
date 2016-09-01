@@ -66,7 +66,23 @@ public class ClientAction {
         return jsonObject.toString();
     }
 
-    @RequestMapping(value = "editdest")
+    @RequestMapping(value = "getdest", produces = "html/text;charset=UTF-8")
+    @ResponseBody
+    public String getDest(TGoodsDest tGoodsDest, HttpServletResponse response){
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        JSONObject jsonObject = new JSONObject();
+
+        List<TGoodsDest> list1 = destService.getDestListByParam(tGoodsDest, null, null);
+        if(list1.size() > 0){
+            jsonObject.put("state", Const.EXIST_STATE);
+            jsonObject.put("dest", list1.get(0));
+            return jsonObject.toString();
+        }
+        jsonObject.put("state", Const.SUCCESS_STATE);
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "editdest", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String editDest(TGoodsDest tGoodsDest, String actionFlag, String clientName, String isdelete, HttpServletResponse response){
         response.addHeader("Access-Control-Allow-Origin", "*");
@@ -82,12 +98,11 @@ public class ClientAction {
         if(Const.EDIT_ADD.equals(actionFlag)){
             tGoodsDest.setId(UUID.getID());
             tGoodsDest.setCid(list1.get(0).getCid());
-
+            destService.addDest(tGoodsDest);
 
             jsonObject.put("state", Const.SUCCESS_STATE);
         }else if(Const.EDIT_UPDATE.equals(actionFlag)){
-
-
+            destService.modifyDest(tGoodsDest);
             jsonObject.put("state", Const.SUCCESS_STATE);
         }
         return jsonObject.toString();
