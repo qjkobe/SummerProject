@@ -2,10 +2,14 @@ package com.qjkobe.action.order;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qjkobe.db.model.Orderlist;
+import com.qjkobe.db.model.Route;
 import com.qjkobe.db.model.Staff;
+import com.qjkobe.entity.Node;
 import com.qjkobe.services.OrderService;
+import com.qjkobe.services.RouteService;
 import com.qjkobe.services.StaffService;
 import com.qjkobe.utils.Const;
+import com.qjkobe.utils.Dijkstra;
 import com.qjkobe.utils.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/1.
@@ -27,6 +32,9 @@ public class OrderAction {
 
     @Autowired
     StaffService staffService;
+
+    @Autowired
+    RouteService routeService;
 
     @RequestMapping(value = "addOrder")
     @ResponseBody
@@ -71,6 +79,42 @@ public class OrderAction {
         orderlist.setStatus(2);
         orderService.modifyOrder(orderlist);
         jsonObject.put("state", Const.SUCCESS_STATE);
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "getRoute" ,produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getRoute(Orderlist orderlist, HttpServletResponse response){
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        JSONObject jsonObject = new JSONObject();
+        if(StringUtils.isEmpty(orderlist.getDestination())){
+            jsonObject.put("state", Const.ERROR_STATE);
+            return jsonObject.toString();
+        }
+
+        Route route = new Route();
+        Dijkstra test=new Dijkstra();
+        Node start=test.init();
+        test.computePath(start);
+        if(StringUtils.isEmpty(test.getPath(orderlist.getDestination()))){
+            jsonObject.put("state", Const.ERROR_STATE);
+            return jsonObject.toString();
+        }
+        route.setPlace(test.getPath(orderlist.getDestination()));
+
+        List<Route> list1 = routeService.getRouteListByParam(route, null, null);
+        if(list1.size() > 0){
+            route = list1.get(0);
+            jsonObject.put("state", Const.SUCCESS_STATE);
+            jsonObject.put("route", route);
+            return jsonObject.toString();
+        }
+
+        route.setDaodatime("暂时为空");
+        route.setRid(UUID.getID());
+        routeService.addRoute(route);
+        jsonObject.put("state", Const.SUCCESS_STATE);
+        jsonObject.put("route", route);
         return jsonObject.toString();
     }
 }
