@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,12 +48,35 @@ public class OrderAction {
             return jsonObject.toString();
         }
 
-        orderlist.setSid(UUID.getID());
-        orderlist.setStatus(0);
 
         Staff staff = new Staff();
         staff.setUsername(staffName);
         staff = staffService.getStaffListByParam(staff, null, null).get(0);
+
+        orderlist.setSid(staff.getSid());
+
+        //覆盖之前的订单
+        Orderlist query = new Orderlist();
+        query.setSid(staff.getSid());
+        query.setCid(orderlist.getCid());
+        List<Orderlist> list1 = orderService.getOrderListByParam(query, null, null);
+        if(list1.size() > 0){
+            if(list1.get(0).getStatus() != 0){
+                jsonObject.put("state", Const.EXIST_STATE);
+                return jsonObject.toString();
+            }
+            orderlist.setOid(list1.get(0).getOid());
+            orderlist.setStatus(0);
+            orderlist.setXiadantime(new Date());
+            orderService.modifyOrder(orderlist);
+            jsonObject.put("state", Const.SUCCESS_STATE);
+            return jsonObject.toString();
+        }
+
+        orderlist.setOid(UUID.getID());
+        orderlist.setStatus(0);
+        orderlist.setXiadantime(new Date());
+
         orderService.addOrder(orderlist);
         jsonObject.put("state", Const.SUCCESS_STATE);
         return jsonObject.toString();
