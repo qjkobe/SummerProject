@@ -4,10 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.qjkobe.db.model.Client;
 import com.qjkobe.db.model.Goods;
+import com.qjkobe.db.model.Orderlist;
 import com.qjkobe.db.model.TGoodsDest;
 import com.qjkobe.services.ClientService;
 import com.qjkobe.services.DestService;
 import com.qjkobe.services.GoodsService;
+import com.qjkobe.services.OrderService;
 import com.qjkobe.utils.Const;
 import com.qjkobe.utils.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class ClientAction {
 
     @Autowired
     DestService destService;
+
+    @Autowired
+    OrderService orderService;
 
     @RequestMapping(value = "editGoods")
     @ResponseBody
@@ -106,5 +111,37 @@ public class ClientAction {
             jsonObject.put("state", Const.SUCCESS_STATE);
         }
         return jsonObject.toString();
+    }
+
+    /**
+     * 获得进行中的订单
+     * @param username 用户名
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "getOrdering", produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getOrdering(String username, HttpServletResponse response){
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        JSONObject resObj = new JSONObject();
+        if(StringUtils.isEmpty(username)){
+            resObj.put("state", Const.ERROR_STATE);
+            return resObj.toString();
+        }
+
+        Client client = new Client();
+        client.setUsername(username);
+        List<Client> list1 = clientService.getClientListByParam(client, null, null);
+        if(list1.size() == 0){
+            resObj.put("state", Const.ERROR_STATE);
+            return resObj.toString();
+        }
+
+        Orderlist orderlist = new Orderlist();
+        orderlist.setStatus(1);
+        List<Orderlist> list2 = orderService.getOrderListByParam(orderlist, null, null);
+        resObj.put("state", Const.SUCCESS_STATE);
+        resObj.put("orders", list2);
+        return resObj.toString();
     }
 }

@@ -101,4 +101,36 @@ public class StaffAction {
         resObj.put("performance", list2.size());
         return resObj.toString();
     }
+
+    /**
+     * 获得进行中的订单
+     * @param username 用户名
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "getOrdering", produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getOrdering(String username, HttpServletResponse response){
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        JSONObject resObj = new JSONObject();
+        if(StringUtils.isEmpty(username)){
+            resObj.put("state", Const.ERROR_STATE);
+            return resObj.toString();
+        }
+
+        Staff staff = new Staff();
+        staff.setUsername(username);
+        List<Staff> list1 = staffService.getStaffListByParam(staff, null, null);
+        if(list1.size() == 0){
+            resObj.put("state", Const.ERROR_STATE);
+            return resObj.toString();
+        }
+
+        Orderlist orderlist = new Orderlist();
+        orderlist.setStatus(1);
+        List<Orderlist> list2 = orderService.getOrderListByParam(orderlist, null, null);
+        resObj.put("state", Const.SUCCESS_STATE);
+        resObj.put("orders", list2);
+        return resObj.toString();
+    }
 }
