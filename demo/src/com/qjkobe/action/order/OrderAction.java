@@ -1,10 +1,12 @@
 package com.qjkobe.action.order;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qjkobe.db.model.Goods;
 import com.qjkobe.db.model.Orderlist;
 import com.qjkobe.db.model.Route;
 import com.qjkobe.db.model.Staff;
 import com.qjkobe.entity.Node;
+import com.qjkobe.services.GoodsService;
 import com.qjkobe.services.OrderService;
 import com.qjkobe.services.RouteService;
 import com.qjkobe.services.StaffService;
@@ -36,6 +38,9 @@ public class OrderAction {
 
     @Autowired
     RouteService routeService;
+
+    @Autowired
+    GoodsService goodsService;
 
     @RequestMapping(value = "addOrder")
     @ResponseBody
@@ -90,6 +95,12 @@ public class OrderAction {
 
         orderlist.setStatus(1);
         orderService.modifyOrder(orderlist);
+
+        List<Orderlist> list1 = orderService.getOrderListByParam(orderlist, null, null);
+        Goods goods = goodsService.getGoodsById(list1.get(0).getGid());
+        goods.setStatus(1);
+        goodsService.modifyGoods(goods);
+
         jsonObject.put("state", Const.SUCCESS_STATE);
         return jsonObject.toString();
     }
